@@ -80,13 +80,14 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
 
     final sizeOptions = selectedCrust != null
         ? (crustMap[selectedCrust] is List
-            ? (crustMap[selectedCrust] as List).cast<String>()
-            : <String>[])
+              ? (crustMap[selectedCrust] as List).cast<String>()
+              : <String>[])
         : <String>[];
 
     final sauceRaw = widget.product['Sauce'];
-    final sauceOptions =
-        sauceRaw is List ? sauceRaw.whereType<String>().toList() : <String>[];
+    final sauceOptions = sauceRaw is List
+        ? sauceRaw.whereType<String>().toList()
+        : <String>[];
 
     final priceMap = widget.product['price'];
 
@@ -104,7 +105,8 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
     }
 
     // Only show portion selection if no crust, size, or sauce and 6Pcs,12Pcs not null
-    final showPortionDropdown = crustOptions.isEmpty &&
+    final showPortionDropdown =
+        crustOptions.isEmpty &&
         sizeOptions.isEmpty &&
         sauceOptions.isEmpty &&
         widget.product['price']['6Pcs'] != null &&
@@ -129,22 +131,28 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
                   Text(
                     widget.product['title'] ?? 'Custom Item',
                     style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const Divider(),
 
                   /// Crust Dropdown
                   if (crustOptions.isNotEmpty) ...[
-                    const Text('Select your crust',
-                        style: TextStyle(fontSize: 18)),
+                    const Text(
+                      'Select your crust',
+                      style: TextStyle(fontSize: 18),
+                    ),
                     DropdownButton<String>(
                       value: selectedCrust,
                       isExpanded: true,
                       items: crustOptions
-                          .map((crust) => DropdownMenuItem(
-                                value: crust,
-                                child: Text(crust),
-                              ))
+                          .map(
+                            (crust) => DropdownMenuItem(
+                              value: crust,
+                              child: Text(crust),
+                            ),
+                          )
                           .toList(),
                       onChanged: (value) {
                         setState(() {
@@ -168,12 +176,14 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
                       value: selectedSize,
                       isExpanded: true,
                       items: sizeOptions.map((size) {
-                        final sizePrice =
-                            priceMap is Map ? priceMap[size] : null;
+                        final sizePrice = priceMap is Map
+                            ? priceMap[size]
+                            : null;
                         return DropdownMenuItem<String>(
                           value: size,
                           child: Text(
-                              "$size - ${sizePrice != null ? (sizePrice as num).toStringAsFixed(2) : 'N/A'}"),
+                            "$size - ${sizePrice != null ? (sizePrice as num).toStringAsFixed(2) : 'N/A'}",
+                          ),
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -192,10 +202,12 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
                       value: selectedSauce,
                       isExpanded: true,
                       items: sauceOptions
-                          .map((sauce) => DropdownMenuItem(
-                                value: sauce,
-                                child: Text(sauce),
-                              ))
+                          .map(
+                            (sauce) => DropdownMenuItem(
+                              value: sauce,
+                              child: Text(sauce),
+                            ),
+                          )
                           .toList(),
                       onChanged: (value) {
                         setState(() {
@@ -208,8 +220,10 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
 
                   /// Portion Dropdown only if needed
                   if (showPortionDropdown && customPriceKeys.isNotEmpty) ...[
-                    const Text('Select Portion',
-                        style: TextStyle(fontSize: 18)),
+                    const Text(
+                      'Select Portion',
+                      style: TextStyle(fontSize: 18),
+                    ),
                     DropdownButton<String>(
                       value: selectedPriceKey,
                       isExpanded: true,
@@ -218,7 +232,8 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
                         return DropdownMenuItem<String>(
                           value: key,
                           child: Text(
-                              "$key - Rs. ${keyPrice != null ? (keyPrice as num).toStringAsFixed(2) : 'N/A'}"),
+                            "$key - Rs. ${keyPrice != null ? (keyPrice as num).toStringAsFixed(2) : 'N/A'}",
+                          ),
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -237,44 +252,50 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
           /// Add to Cart button
           SafeArea(
             child: Center(
-              child: Column(children: [
-                Text(
-                  "Price: Rs. ${price.toStringAsFixed(2)}",
-                  style: const TextStyle(
+              child: Column(
+                children: [
+                  Text(
+                    "Price: Rs. ${price.toStringAsFixed(2)}",
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.red),
-                ),
-                const Divider(),
-                const SizedBox(height: 20),
-                CustomButton(
-                  text: 'Add to Cart',
-                  onTap: () {
-                    final cartProvider =
-                        Provider.of<CartProvider>(context, listen: false);
+                      color: Colors.red,
+                    ),
+                  ),
+                  const Divider(),
+                  const SizedBox(height: 20),
+                  CustomButton(
+                    text: 'Add to Cart',
+                    onTap: () {
+                      final cartProvider = Provider.of<CartProvider>(
+                        context,
+                        listen: false,
+                      );
 
-                    // --- CLEAN PRODUCT MAP FOR HIVE ---
-                    final safeProduct =
-                        Map<String, dynamic>.from(widget.product)
-                          ..removeWhere(
-                              (key, value) => value == null || value is Set);
+                      // --- CLEAN PRODUCT MAP FOR HIVE ---
+                      final safeProduct =
+                          Map<String, dynamic>.from(widget.product)
+                            ..removeWhere(
+                              (key, value) => value == null || value is Set,
+                            );
 
-                    safeProduct['selectedCrust'] = selectedCrust;
-                    safeProduct['selectedSize'] = selectedSize;
-                    safeProduct['selectedSauce'] = selectedSauce;
-                    safeProduct['selectedPriceKey'] = selectedPriceKey;
-                    safeProduct['selectedPrice'] = price;
+                      safeProduct['selectedCrust'] = selectedCrust;
+                      safeProduct['selectedSize'] = selectedSize;
+                      safeProduct['selectedSauce'] = selectedSauce;
+                      safeProduct['selectedPriceKey'] = selectedPriceKey;
+                      safeProduct['selectedPrice'] = price;
 
-                    cartProvider.addProduct(safeProduct);
+                      cartProvider.addProduct(safeProduct);
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Item added to cart!')),
-                    );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Item added to cart!')),
+                      );
 
-                    Navigator.pop(context);
-                  },
-                ),
-              ]),
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ],
