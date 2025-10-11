@@ -1,11 +1,7 @@
-# 🍕 QuickSlice - Your Ultimate Pizza & Food Delivery App
+# <p align="center"><img src="https://raw.githubusercontent.com/01Ruwantha/quick_slice/main/assets/icon/icon.png?raw=true" alt="App Logo" width="200"/></p><p align="center"><img src="https://github.com/01Ruwantha/quick_slice/blob/main/assets/images/branding.png?raw=true" alt="branding png" width="200"/></p> <p align="center">Your Ultimate Pizza & Food Delivery App</p>
 
 <div align="center">
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/01Ruwantha/quick_slice/main/assets/icon/icon.png?raw=true" alt="App Logo" width="200"/>
-   <img src="https://raw.githubusercontent.com/01Ruwantha/quick_slice/main/assets/icon/icon.png?raw=true" alt="App Logo" width="200"/>
-</p>
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.9.2-blue.svg)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.0+-blue.svg)](https://dart.dev)
