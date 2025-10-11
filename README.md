@@ -13,24 +13,14 @@
 </div>
 
 ## 📹 Video
-<p align="center">
-  <video src="https://github.com/01Ruwantha/quick_slice/blob/main/video/QuickSlice.gif?raw=true" alt="App Demo" width="150" height="300/>
-</p>
     
-![App Demo](https://github.com/01Ruwantha/quick_slice/blob/main/video/QuickSlice.gif?raw=true)
-
 <p align="center">
-  <video
-    src="https://github.com/01Ruwantha/quick_slice/blob/main/video/QuickSlice.mp4?raw=true"
-    width="600"
-    controls
-    autoplay
-    loop
-    muted
-    playsinline
-  >
-    Your browser does not support the video tag.
-  </video>
+  <img 
+  src="https://github.com/01Ruwantha/quick_slice/blob/main/video/QuickSlice.gif?raw=true" 
+  alt="App Demo" 
+  width="150" 
+  height="300"
+/>
 </p>
 
 ## 📱 Screenshots
