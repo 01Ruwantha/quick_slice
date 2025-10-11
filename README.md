@@ -18,11 +18,11 @@
 
 | Home Screen | Product Details | Cart |
 |-------------|-----------------|------|
-| ![Home](https://via.placeholder.com/200x400/880E4F/FFFFFF?text=Home) | ![Details](https://via.placeholder.com/200x400/E65100/FFFFFF?text=Details) | ![Cart](https://via.placeholder.com/200x400/F9A825/000000?text=Cart) |
+| <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/homePage.jpg?raw=true" alt="Home page" width="150" height="300"> | <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/homePage.jpg?raw=true" alt="Home page" width="150" height="300"> |<img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/homePage.jpg?raw=true" alt="Home page" width="150" height="300"> |
 
 | Search | Favorites | Profile |
 |--------|-----------|---------|
-| ![Search](https://via.placeholder.com/200x400/2196F3/FFFFFF?text=Search) | ![Favorites](https://via.placeholder.com/200x400/E91E63/FFFFFF?text=Favorites) | ![Profile](https://via.placeholder.com/200x400/4CAF50/FFFFFF?text=Profile) |
+| <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/homePage.jpg?raw=true" alt="Home page" width="150" height="300"> | <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/homePage.jpg?raw=true" alt="Home page" width="150" height="300">| <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/homePage.jpg?raw=true" alt="Home page" width="150" height="300"> |
 
 </div>
 
