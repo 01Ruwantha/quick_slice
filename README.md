@@ -12,6 +12,11 @@
 
 </div>
 
+## 📹 Video
+<p align="center">
+  <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/demo.gif?raw=true" alt="App Demo" width="300"/>
+</p>
+
 ## 📱 Screenshots
 
 <div align="center">
