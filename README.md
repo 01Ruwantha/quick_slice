@@ -2,7 +2,10 @@
 
 <div align="center">
 
-![QuickSlice Banner](https://via.placeholder.com/800x200/880E4F/FFFFFF?text=QuickSlice+-+Slice+the+Wait,+Savor+the+Taste)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/01Ruwantha/quick_slice/main/assets/icon/icon.png?raw=true" alt="App Logo" width="200"/>
+   <img src="https://raw.githubusercontent.com/01Ruwantha/quick_slice/main/assets/icon/icon.png?raw=true" alt="App Logo" width="200"/>
+</p>
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.9.2-blue.svg)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.0+-blue.svg)](https://dart.dev)
