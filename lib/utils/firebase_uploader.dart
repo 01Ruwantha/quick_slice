@@ -1,0 +1,1638 @@
+// utils/firebase_uploader.dart
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
+
+class FirebaseUploader {
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  // FIXED: Make productList static so it can be accessed from other files
+  static final List<Map<String, dynamic>> productList = [
+    {
+      'id': '0',
+      'title': 'Veggie Masala Pizza',
+      'list_name': 'pizzas',
+      'category': 'Delight',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': 'Made with spicy veggie masala, onions, tomato & cheese',
+      'price': {
+        'price': null,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': 2980.00,
+        'Medium': 1590.00,
+        'Personal': 820.00,
+      },
+      'Sauce': ['Tomato', 'Kotchchi'],
+      'crust': {
+        'Pan': ['Large', 'Medium', 'Personal'],
+        'Sausage': ['Large'],
+      },
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/2688c78f-e854-49b8-a3c3-d84171f501c2.jpg',
+    },
+    {
+      'id': '1',
+      'title': 'Chilli Chicken Pizza',
+      'list_name': 'pizzas',
+      'category': 'Delight',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A pizza topped with Spicy Chicken, Green Chillies, Onions & Mozzarella',
+      'price': {
+        'price': null,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': 2980.00,
+        'Medium': 1590.00,
+        'Personal': 820.00,
+      },
+      'Sauce': ['Tomato'],
+      'crust': {
+        'Pan': ['Large', 'Medium', 'Personal'],
+        'Sausage': ['Large'],
+      },
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/209e7feb-7c0b-4fc4-8019-ab2a9e3406a9.jpg',
+    },
+    {
+      'id': '2',
+      'title': 'Margherita Pizza',
+      'list_name': 'pizzas',
+      'category': 'Delight',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'Rich tomato sauce base topped with cream cheese, tomato, mozzarella & basil leaves',
+      'price': {
+        'price': null,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': 2980.00,
+        'Medium': 1590.00,
+        'Personal': 820.00,
+      },
+      'Sauce': ['Tomato'],
+      'crust': {
+        'Pan': ['Large', 'Medium', 'Personal'],
+        'Sausage': ['Large'],
+      },
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/3fd508d1-2a4a-4431-b243-4b7eb26dd8d4.jpg',
+    },
+    {
+      'id': '3',
+      'title': 'Sausage Delight Pizza',
+      'list_name': 'pizzas',
+      'category': 'Delight',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': 'Chicken sausages & onions with a double layer of cheese.',
+      'price': {
+        'price': null,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': 2980.00,
+        'Medium': 1590.00,
+        'Personal': 820.00,
+      },
+      'Sauce': ['Tomato', 'Mayo', 'Kotchchi'],
+      'crust': {
+        'Pan': ['Large', 'Medium', 'Personal'],
+        'Sausage': ['Large'],
+      },
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/1bf84662-1902-4b94-9078-2da46056904f.jpg',
+    },
+    {
+      'id': '4',
+      'title': 'Chicken Bacon & Potato with Nai Miris Pizza',
+      'list_name': 'pizzas',
+      'category': 'Delight',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A flavoursome duo of chicken bacon and spicy potatoes on a fiery base of Nai Miris sauce complemented with crunchy onions and green chillies, topped with a layer of mozzarella cheese',
+      'price': {
+        'price': null,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': 2980.00,
+        'Medium': 1590.00,
+        'Personal': 820.00,
+      },
+      'Sauce': ['Tomato', 'Kotchchi'],
+      'crust': {
+        'Pan': ['Large', 'Medium', 'Personal'],
+        'Sausage': ['Large'],
+      },
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/e21a91b2-e470-4aae-a5e0-e8a372be2e45.jpg',
+    },
+    {
+      'id': '5',
+      'title': 'Middle Eastern Chicken Kofta Pizza',
+      'list_name': 'pizzas',
+      'category': 'Classic',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'This Pizza is a fusion of Middle Eastern flavours with juicy chicken kofta, cream cheese, fresh coriander, green chillies, onions and mozzarella, all drizzled with our signature Arabic sauce.',
+      'price': {
+        'price': null,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': 3780.00,
+        'Medium': 2000.00,
+        'Personal': 1100.00,
+      },
+      'Sauce': ['Tomato'],
+      'crust': {
+        'Pan': ['Large', 'Medium', 'Personal'],
+        'Sausage': ['Large'],
+      },
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/ac2bd18d-8ac1-48bc-96bd-a7db49a09c31.jpg',
+    },
+    {
+      'id': '6',
+      'title': 'Chicken Triple Treat Pizza',
+      'list_name': 'pizzas',
+      'category': 'Classic',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'Made with Chicken Salami, Roast Chicken, Chicken Bacon, Onions & Cheese.',
+      'price': {
+        'price': null,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': 3780.00,
+        'Medium': 2000.00,
+        'Personal': 1100.00,
+      },
+      'Sauce': ['Tomato', 'Mayo', 'Kotchchi'],
+      'crust': {
+        'Pan': ['Large', 'Medium', 'Personal'],
+        'Sausage': ['Large'],
+      },
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/c46dc1c2-8ac2-4d9a-b17f-2b75725d8b84.jpg',
+    },
+    {
+      'id': '7',
+      'title': 'Double Chicken Surprise Pizza',
+      'list_name': 'pizzas',
+      'category': 'Classic',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A combination of spicy chicken and succulent chicken sausages accompanied with crunchy onions and capsicum, topped with a layer of mozzarella cheese.',
+      'price': {
+        'price': null,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': 3780.00,
+        'Medium': 2000.00,
+        'Personal': 1100.00,
+      },
+      'Sauce': ['Tomato', 'Mayo', 'Kotchchi'],
+      'crust': {
+        'Pan': ['Large', 'Medium', 'Personal'],
+        'Sausage': ['Large'],
+      },
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/52b93289-98a9-4296-87a4-0a0e0acda8c6.jpg',
+    },
+    {
+      'id': '8',
+      'title': 'Cheese Lovers Pizza',
+      'list_name': 'pizzas',
+      'category': 'Classic',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': 'Rich tomato sauce with a triple layer of mozzarella cheese.',
+      'price': {
+        'price': null,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': 3780.00,
+        'Medium': 2000.00,
+        'Personal': 1100.00,
+      },
+      'Sauce': ['Tomato', 'Mayo', 'Kotchchi'],
+      'crust': {
+        'Pan': ['Large', 'Medium', 'Personal'],
+        'Sausage': ['Large'],
+      },
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/ff0e7e56-bacb-4986-a45d-cb99766c4f8e.jpg',
+    },
+    {
+      'id': '9',
+      'title': 'Tandoori Chicken Pizza',
+      'list_name': 'pizzas',
+      'category': 'Classic',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': 'Tandoori chicken & onions with a double layer of cheese.',
+      'price': {
+        'price': null,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': 3780.00,
+        'Medium': 2000.00,
+        'Personal': 1100.00,
+      },
+      'Sauce': ['Tomato', 'Mayo', 'Kotchchi'],
+      'crust': {
+        'Pan': ['Large', 'Medium', 'Personal'],
+        'Sausage': ['Large'],
+      },
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/3178e759-1201-4803-a9b8-263998b0d334.jpg',
+    },
+    {
+      'id': '10',
+      'title': 'Hot & Spicy Chicken Pizza',
+      'list_name': 'pizzas',
+      'category': 'Classic',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': true,
+      'limited_time': false,
+      'details':
+          'Spicy chunks of chicken, capsicums & onions with a double layer of cheese.',
+      'price': {
+        'price': null,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': 3780.00,
+        'Medium': 2000.00,
+        'Personal': 1100.00,
+      },
+      'Sauce': ['Tomato', 'Mayo', 'Kotchchi'],
+      'crust': {
+        'Pan': ['Large', 'Medium', 'Personal'],
+        'Sausage': ['Large'],
+      },
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/c4f8dd31-4c4e-41e8-be57-3f0c4e32e13d.jpg',
+    },
+    {
+      'id': '11',
+      'title': 'Butter Chicken Masala Pizza',
+      'list_name': 'pizzas',
+      'category': 'Classic',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'The ever famous Butter Masala Chicken together with a layer of cream cheese, fresh onions, coriander, ginger and garlic, blanketed with a layer of mozzarella cheese.',
+      'price': {
+        'price': null,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': 3780.00,
+        'Medium': 2000.00,
+        'Personal': 1100.00,
+      },
+      'Sauce': ['Tomato', 'Mayo', 'Kotchchi'],
+      'crust': {
+        'Pan': ['Large', 'Medium', 'Personal'],
+        'Sausage': ['Large'],
+      },
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/e2083c31-f5e3-43ea-a189-778d58967a6b.jpg',
+    },
+    {
+      'id': '12',
+      'title': 'Double Chicken Delight Melts Single',
+      'list_name': 'melts',
+      'category': 'Melts Single',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A Crunchy folded dough Loaded with Chicken Bacon, Roast Chicken, Onion, and Cheese baked to golden perfection',
+      'price': {
+        'price': 530.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': ['Spicy Marinary', 'Cheesy Kotchchi'],
+      'crust': {null},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/3c457c1a-4aa0-46c6-899c-79a8519af4dc.jpg',
+    },
+    {
+      'id': '13',
+      'title': 'Spicy Chicken Combo Melts Single',
+      'list_name': 'melts',
+      'category': 'Melts Single',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A Crunchy folded dough Loaded with Spicy Chicken, Kotchchi Meat, Onion, and Cheese baked to golden perfection',
+      'price': {
+        'price': 530.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': ['Spicy Marinary', 'Cheesy Kotchchi'],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/f3d09a25-d283-49ea-ae81-8dba97effb59.jpg',
+    },
+    {
+      'id': '14',
+      'title': 'Veggie Lovers Melts Single',
+      'list_name': 'melts',
+      'category': 'Melts Single',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A Crunchy folded dough Loaded with Spicy Veg topping, Paneer, Capsicum, Onion, and Cheese baked to golden perfection',
+      'price': {
+        'price': 530.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': ['Spicy Marinary', 'Cheesy Kotchchi'],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/95c7c42a-3521-4482-b5c8-b0e99809b03a.jpg',
+    },
+    {
+      'id': '15',
+      'title': 'Tandoori & Butter Chicken Masala Melts Single',
+      'list_name': 'melts',
+      'category': 'Melts Single',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A Crunchy folded dough Loaded with Tandoori Chicken, Butter Chicken Masala, coriander, Onion and Cheese baked to golden perfection',
+      'price': {
+        'price': 530.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': ['Spicy Marinary', 'Cheesy Kotchchi'],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/bf8fe53d-d76d-4387-b7d8-6769836318cd.jpg',
+    },
+    {
+      'id': '16',
+      'title': 'Meat Feast Melts Melts Single',
+      'list_name': 'melts',
+      'category': 'Melts Single',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A Crunchy folded dough Loaded with Devilled Chicken, BBQ Chicken, Chicken Bacon, Sausage, Mushroom, and Cheese baked to golden perfection',
+      'price': {
+        'price': 630.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': ['Spicy Marinary', 'Cheesy Kotchchi'],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/3de8fe58-7304-4d0a-88e5-02c9a5221c70.jpg',
+    },
+    {
+      'id': '17',
+      'title': 'Seafood Sensation Melts Single',
+      'list_name': 'melts',
+      'category': 'Melts Single',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A Crunchy folded dough Loaded with Creamy Cuttlefish & Prawns combined with Devilled Prawns, green chillies, onion and Cheese baked to golden perfection',
+      'price': {
+        'price': 630.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': ['Spicy Marinary', 'Cheesy Kotchchi'],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/ea64c17f-2a06-4030-a32a-6b7d6c77ea06.jpg',
+    },
+    {
+      'id': '18',
+      'title': 'Cheeseburger Melts Single',
+      'list_name': 'melts',
+      'category': 'Melts Single',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A Crunchy folded dough Loaded with a Chicken Burger Patty, Caramelized Onions, Jalapenos, Tomato Sauce, Cheese sauce, Cheddar & Mozzarella Cheese',
+      'price': {
+        'price': 630.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': ['Spicy Marinary', 'Cheesy Kotchchi', 'Cream Cheese'],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/47c189c8-5749-4ef3-9500-55bbd4adcec2.jpg',
+    },
+    {
+      'id': '19',
+      'title': 'Minced Mutton Melts Single',
+      'list_name': 'melts',
+      'category': 'Melts Single',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A Crunchy folded dough Loaded with Minced Mutton to golden perfection',
+      'price': {
+        'price': 630.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': ['Spicy Marinary', 'Cheesy Kotchchi'],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/823c5ebf-55e6-4441-8334-287a216620e2.jpg',
+    },
+    {
+      'id': '20',
+      'title': 'Double Chicken Delight Melts',
+      'list_name': 'melts',
+      'category': 'Melts',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A Crunchy folded dough Loaded with Chicken Bacon, Roast Chicken, Onion, and Cheese baked to golden perfection',
+      'price': {
+        'price': 1060.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': ['Spicy Marinary', 'Cheesy Kotchchi'],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/098a5f8c-c954-4808-8d46-fe16a6b974a7.jpg',
+    },
+    {
+      'id': '21',
+      'title': 'Spicy Chicken Combo Melts',
+      'list_name': 'melts',
+      'category': 'Melts',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A Crunchy folded dough Loaded with Spicy Chicken, Kotchchi Meat, Onion, and Cheese baked to golden perfection',
+      'price': {
+        'price': 1060.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': ['Spicy Marinary', 'Cheesy Kotchchi'],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/c69478a5-4d09-4d4e-bb23-88baa99768f0.jpg',
+    },
+    {
+      'id': '22',
+      'title': 'Veggie Lovers Melts',
+      'list_name': 'melts',
+      'category': 'Melts',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A Crunchy folded dough Loaded with Spicy Veg topping, Paneer, Capsicum, Onion, and Cheese baked to golden perfection',
+      'price': {
+        'price': 1060.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': ['Spicy Marinary', 'Cheesy Kotchchi'],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/155aef34-3c5a-48aa-b33d-3654e8fcdfa6.jpg',
+    },
+    {
+      'id': '23',
+      'title': 'Tandoori & Butter Chicken Masala Melts',
+      'list_name': 'melts',
+      'category': 'Melts',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A Crunchy folded dough Loaded with Tandoori Chicken, Butter Chicken Masala, coriander, Onion and Cheese baked to golden perfection',
+      'price': {
+        'price': 1060.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': ['Spicy Marinary', 'Cheesy Kotchchi'],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/94a21fd8-37fd-4932-918b-3627323f19c4.jpg',
+    },
+    {
+      'id': '24',
+      'title': 'BBQ Chicken Baked Rice',
+      'list_name': 'riceandpasta',
+      'category': 'Rice ( From 11AM to 3PM )',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': true,
+      'details':
+          'Only available from 11AM - 3PM, Fragrant rice, topped with chop-suey and BBQ Chicken',
+      'price': {
+        'price': 820.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/82538bd1-a9c8-4ca7-ab0c-376f2872a94b.jpg',
+    },
+    {
+      'id': '25',
+      'title': 'Hot & Spicy Chicken Rice',
+      'list_name': 'riceandpasta',
+      'category': 'Rice ( From 11AM to 3PM )',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': true,
+      'details':
+          'Only available from 11AM - 3PM, Fragrant rice, topped with chop-suey and Hot & Spicy Chicken',
+      'price': {
+        'price': 820.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/9411d203-7ac7-4e94-8ccd-66e45fc184b0.jpg',
+    },
+    {
+      'id': '26',
+      'title': 'Spicy Veggie with Paneer Rice',
+      'list_name': 'riceandpasta',
+      'category': 'Rice ( From 11AM to 3PM )',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': true,
+      'details':
+          'Only available from 11 AM - 3 PM. Fragrant rice topped with chop-suey, spicy veggies, paneer, and baked to perfection.',
+      'price': {
+        'price': 820.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/12b9842f-de95-4973-bed1-611f582d5acd.jpg',
+    },
+    {
+      'id': '27',
+      'title': 'Birizza Chicken',
+      'list_name': 'riceandpasta',
+      'category': 'Rice ( From 11AM to 3PM )',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': true,
+      'details':
+          'Only available from 11AM - 3PM, Fragrant basmati rice made with butter chicken masala.',
+      'price': {
+        'price': 1110.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/2804aad0-92b2-4b40-a777-43e467070253.jpg',
+    },
+    {
+      'id': '28',
+      'title': 'Birizza Veg',
+      'list_name': 'riceandpasta',
+      'category': 'Rice ( From 11AM to 3PM )',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': true,
+      'details':
+          'Only available from 11AM - 3PM, Fragrant basmati rice made with spicy veggie masala and paneer',
+      'price': {
+        'price': 1110.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/a9586fb9-b2c8-4501-b9c9-a385144114cf.jpg',
+    },
+    {
+      'id': '29',
+      'title': 'Chicken Spaghetti Bolognese Sauce',
+      'list_name': 'riceandpasta',
+      'category': 'New Arrivals',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'Spaghetti tossed in rich bolognese sauce, topped with oregano and fresh basil leaves.',
+      'price': {
+        'price': 1000.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/bc449f99-d017-4eea-b9cd-2422fe5296b6.jpg',
+    },
+    {
+      'id': '30',
+      'title': 'Spaghetti Chicken & Sausages',
+      'list_name': 'riceandpasta',
+      'category': 'New Arrivals',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'Spaghetti in a bold arrabbiata sauce, topped with spicy chicken, savoury sausages, oregano and basil leaves.',
+      'price': {
+        'price': 1000.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/f24dc311-7ea0-4a63-8791-2694af857dfd.jpg',
+    },
+    {
+      'id': '31',
+      'title': 'Mac and Cheese',
+      'list_name': 'riceandpasta',
+      'category': 'New Arrivals',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'Creamy macaroni baked in our cheese sauce for a rich and creamy delight.',
+      'price': {
+        'price': 1200.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/604b0723-f81f-4e9b-bcf7-f50cb70dc2ee.jpg',
+    },
+    {
+      'id': '32',
+      'title': 'Butter Chicken Pasta',
+      'list_name': 'riceandpasta',
+      'category': 'New Arrivals',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'Macaroni coated in velvety butter chicken gravy, paired with tender butter chicken, cheese sauce and a sprinkle of fresh coriander leaves.',
+      'price': {
+        'price': 1200.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/db50b3dd-e48b-40ad-b815-67d3ad32c6df.jpg',
+    },
+    {
+      'id': '33',
+      'title': 'Chicken Lasagna',
+      'list_name': 'riceandpasta',
+      'category': 'New Arrivals',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A true classic with layers of pasta chicken slathered with cheese sauce and mozzarella cheese.',
+      'price': {
+        'price': 1500.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/dc37711a-5fa5-4497-a501-cceeecd06456.jpg',
+    },
+    {
+      'id': '34',
+      'title': 'Creamy Seafood Pasta',
+      'list_name': 'riceandpasta',
+      'category': 'New Arrivals',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'Macaroni in rich cheese sauce, layered with a delightful seafood medley.',
+      'price': {
+        'price': 1500.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/50de5207-821a-47db-bcb8-dbc264e5cb4c.jpg',
+    },
+    {
+      'id': '35',
+      'title': 'Garlic Bread',
+      'list_name': 'appetizers',
+      'category': 'Appetizers',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': 'Sliced & spread with garlic buttery goodness!',
+      'price': {
+        'price': 530.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/0d8f6371-580a-4c45-81e8-07f8d0a3e792.jpg',
+    },
+    {
+      'id': '36',
+      'title': 'Tater Tots',
+      'list_name': 'appetizers',
+      'category': 'Appetizers',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': 'Crispy Potato bites baked to golden perfection.',
+      'price': {
+        'price': 700.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/b1ab567a-1392-42da-9ea7-e98aaaf20b6a.jpg',
+    },
+    {
+      'id': '37',
+      'title': 'Fries',
+      'list_name': 'appetizers',
+      'category': 'Appetizers',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': 'Golden, crunchy, and oven-baked to perfection',
+      'price': {
+        'price': 700.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/c4dcee31-01ba-4f0e-a020-91b88ce83dbc.jpg',
+    },
+    {
+      'id': '38',
+      'title': 'Potato Wedges',
+      'list_name': 'appetizers',
+      'category': 'Appetizers',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'Golden, crispy on the outside and tender on the inside, our potato wedges are baked to perfection with a savory blend of spices.',
+      'price': {
+        'price': 750.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/8938a388-f8db-4bea-b868-6747627259f5.jpg',
+    },
+    {
+      'id': '39',
+      'title': 'Cheesy Garlic Toast',
+      'list_name': 'appetizers',
+      'category': 'Appetizers',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': 'Made with garlic butter, cream cheese and mozzarella.',
+      'price': {
+        'price': 820.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/0c137483-8091-424e-a263-c339c00e9293.jpg',
+    },
+    {
+      'id': '40',
+      'title': 'Cheesy Garlic Bread Supereme',
+      'list_name': 'appetizers',
+      'category': 'Appetizers',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': 'Layered with garlic butter & mozzarella cheese!',
+      'price': {
+        'price': 870.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/e56e1ecd-ee7b-45d4-a541-a9ec1de25365.jpg',
+    },
+    {
+      'id': '41',
+      'title': 'Spicy Chicken & Cheese Balls',
+      'list_name': 'appetizers',
+      'category': 'Appetizers',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          "Chicken and cheese are two things that go so well together, and with this delectable appetizer, you'll find it's the perfect bite-sized snack to get you started!",
+      'price': {
+        'price': 900.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/2e46d8ea-e54b-43b7-bc7c-14a17449c893.jpg',
+    },
+    {
+      'id': '42',
+      'title': 'Cheesy Garlic Toast with Onion',
+      'list_name': 'appetizers',
+      'category': 'Appetizers',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          "Made with garlic butter, stuffed with onions, green chillies and cream cheese, topped with mozzarella.",
+      'price': {
+        'price': 900.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/245a6639-fe0b-4ecf-82b4-56b4dd837716.jpg',
+    },
+    {
+      'id': '43',
+      'title': 'Crispy Chicken Strips 3pcs',
+      'list_name': 'appetizers',
+      'category': 'Appetizers',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': "Oven-baked chicken strips, seasoned to perfection.",
+      'price': {
+        'price': 900.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/fd9de503-621e-41ed-ab23-d1ac10b1e9e1.jpeg',
+    },
+    {
+      'id': '44',
+      'title': 'Crispy Chicken Bites',
+      'list_name': 'appetizers',
+      'category': 'Appetizers',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          "Tender, bite-sized chicken crispy on the outside, juicy on the inside - a light and flavorful snack for any time of day.",
+      'price': {
+        'price': 1000.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/663f0c23-f7f4-4a81-88bf-9aee7319f945.jpg',
+    },
+    {
+      'id': '45',
+      'title': 'Cheesy Chicken Garlic Bread',
+      'list_name': 'appetizers',
+      'category': 'Appetizers',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          "Layered with garlic butter, spicy chicken & mozzarella cheese!",
+      'price': {
+        'price': 1100.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/a8c231bc-a88f-4800-a638-07a6292a86a2.jpg',
+    },
+    {
+      'id': '46',
+      'title': 'Wing It - BBQ',
+      'list_name': 'appetizers',
+      'category': 'Wings',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': true,
+      'limited_time': false,
+      'details':
+          "Succulent chicken wings tossed in our famous BBQ sauce & baked to perfection!",
+      'price': {
+        'price': null,
+        '6Pcs': 1170.00,
+        '12Pcs': 1900.00,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/d3d83870-3a96-4dc9-9330-7fe4586bb800.jpg',
+    },
+    {
+      'id': '47',
+      'title': 'Wing it - Kotchchi',
+      'list_name': 'appetizers',
+      'category': 'Wings',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          "Succulent chicken wings tossed in our famous kotchchi cheese sauce & baked to perfection!",
+      'price': {
+        'price': null,
+        '6Pcs': 1170.00,
+        '12Pcs': 1900.00,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/400b1e53-b628-4d87-8ae8-16d743d3aeba.jpg',
+    },
+    {
+      'id': '48',
+      'title': 'Cinnamon Swirls (2pc per plate) desserts',
+      'list_name': 'desserts',
+      'category': 'Desserts',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A soft dough rolled with sweet cinnamon butter, baked to cream cheese.',
+      'price': {
+        'price': 450.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/c5199ac0-b73e-4209-b4c7-63eb044d0499.jpg',
+    },
+    {
+      'id': '49',
+      'title': 'Chocolate Melt Lava Cake desserts',
+      'list_name': 'desserts',
+      'category': 'Desserts',
+      'type': 'Non-Vegetarian',
+      'favourite': false,
+      'popular': true,
+      'limited_time': false,
+      'details':
+          'Soft, moist chocolate cake with a burst of thick, hot liquid chocolate inside!',
+      'price': {
+        'price': 590.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/586cf80f-66d9-4d1d-bcaf-93055721b6ef.jpg',
+    },
+    {
+      'id': '50',
+      'title': 'Chocolate Caramel Crunch desserts',
+      'list_name': 'desserts',
+      'category': 'Desserts',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A special dessert pizza topped with Chocolate Chips and Mozzarella along with a crust stuffed with Crunchy Peanuts coated in a delicious Caramel Sauce',
+      'price': {
+        'price': 1400.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/db46a379-71f0-4264-83b6-b8dd0043910d.jpg',
+    },
+    {
+      'id': '51',
+      'title': 'Iced Chocolate Malt Juice',
+      'list_name': 'drinks',
+      'category': 'Juices',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': '',
+      'price': {
+        'price': 550.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/9f2180ae-3657-4d9e-8bd4-8186624325c9.jpg',
+    },
+    {
+      'id': '52',
+      'title': 'Thick Mango Magic (300ml) Juice',
+      'list_name': 'drinks',
+      'category': 'Juices',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A tropical blend of the juiciest mango flavour creating the perfect beverage to soothe your',
+      'price': {
+        'price': 750.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/85a74d0f-c522-4787-8611-4c9481319373.jpg',
+    },
+    {
+      'id': '53',
+      'title': 'Vanilla Milk Shake (300ml) Juice',
+      'list_name': 'drinks',
+      'category': 'Juices',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'A tropical blend of the juiciest mango flavour creating the perfect beverage to soothe your',
+      'price': {
+        'price': 980.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/11eb12e0-4038-47d3-b1d0-1805de171264.jpg',
+    },
+    {
+      'id': '54',
+      'title': 'Double Chocolate Milk Shake (300ml) Juice',
+      'list_name': 'drinks',
+      'category': 'Juices',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': true,
+      'limited_time': false,
+      'details':
+          'Take a sip of a creamy concoction of double chocolate and lose yourself in a chocolate coma!',
+      'price': {
+        'price': 980.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/353100da-2668-467f-ac02-e0a29914dd56.jpg',
+    },
+    {
+      'id': '55',
+      'title': 'Strawberry Milk Shake (300ml) Juice',
+      'list_name': 'drinks',
+      'category': 'Juices',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details':
+          'Go red with the delicious flavour of strawberry, mixed and blended into a creamy shake!',
+      'price': {
+        'price': 980.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/e6e26812-ef63-465a-8f0b-49e22def3322.jpg',
+    },
+    {
+      'id': '56',
+      'title': 'Pet Coca-Cola ',
+      'list_name': 'drinks',
+      'category': 'Carbonated',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': '',
+      'price': {
+        'price': 220.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/7f8da6c8-f2da-4ab6-b19e-33f0c9aea244.jpg',
+    },
+    {
+      'id': '57',
+      'title': 'Pet Sprite',
+      'list_name': 'drinks',
+      'category': 'Carbonated',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': '',
+      'price': {
+        'price': 220.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/945a4639-f0e0-4a81-8069-ee097d20ad0b.jpg',
+    },
+    {
+      'id': '58',
+      'title': 'Pet Fanta Orange',
+      'list_name': 'drinks',
+      'category': 'Carbonated',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': '',
+      'price': {
+        'price': 220.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/35e7eb0e-2be2-49b4-8268-4c037b0818a4.jpg',
+    },
+    {
+      'id': '59',
+      'title': 'Coke Zero 400ml',
+      'list_name': 'drinks',
+      'category': 'Carbonated',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': '',
+      'price': {
+        'price': 180.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/a71204e8-c795-4a42-b5b8-03d9623f7751.jpg',
+    },
+    {
+      'id': '60',
+      'title': '1.5l Coca-Cola',
+      'list_name': 'drinks',
+      'category': 'Carbonated',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': '',
+      'price': {
+        'price': 450.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/326e3448-3b52-4741-890d-4178b6de0d23.jpg',
+    },
+    {
+      'id': '61',
+      'title': '1.5l Sprite',
+      'list_name': 'drinks',
+      'category': 'Carbonated',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': '',
+      'price': {
+        'price': 450.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/df0198d8-cea1-46ef-af2f-a7dd5cfd9e96.jpg',
+    },
+    {
+      'id': '62',
+      'title': 'Mineral Water',
+      'list_name': 'drinks',
+      'category': 'Carbonated',
+      'type': 'Vegetarian',
+      'favourite': false,
+      'popular': false,
+      'limited_time': false,
+      'details': '',
+      'price': {
+        'price': 70.00,
+        '6Pcs': null,
+        '12Pcs': null,
+        'Large': null,
+        'Medium': null,
+        'Personal': null,
+      },
+      'Sauce': [],
+      'crust': {},
+      'imageUrl':
+          'https://adminsc.pizzahut.lk//images/mainmenu/af808c84-f21e-4416-b3f1-0acdc3acdc27.jpg',
+    },
+  ];
+
+  static Future<void> uploadProducts() async {
+    try {
+      if (kDebugMode) {
+        print('Starting product upload...');
+      }
+
+      // FIXED: Changed productLists to productList
+      final cleanedProducts = _cleanProductData(productList);
+
+      if (kDebugMode) {
+        print('Cleaned ${cleanedProducts.length} products for upload...');
+      }
+
+      // Upload in batches with delay to avoid overwhelming Firestore
+      int successCount = 0;
+      int errorCount = 0;
+
+      for (int i = 0; i < cleanedProducts.length; i++) {
+        final product = cleanedProducts[i];
+        try {
+          await _firestore.collection('products').add(product);
+          successCount++;
+          if (kDebugMode) {
+            print(
+              '✅ Uploaded ${i + 1}/${cleanedProducts.length}: ${product['title']}',
+            );
+          }
+        } catch (e) {
+          errorCount++;
+          if (kDebugMode) {
+            print('❌ Error uploading ${i + 1}: ${product['title']} - $e');
+          }
+        }
+
+        // Small delay to avoid rate limits
+        if (i < cleanedProducts.length - 1) {
+          await Future.delayed(Duration(milliseconds: 50));
+        }
+      }
+
+      if (kDebugMode) {
+        print(
+          '🎉 Upload completed! Success: $successCount, Errors: $errorCount',
+        );
+        print('📊 Total products processed: ${cleanedProducts.length}');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('💥 Error uploading products: $e');
+      }
+      rethrow;
+    }
+  }
+
+  static List<Map<String, dynamic>> _cleanProductData(
+    List<Map<String, dynamic>> products,
+  ) {
+    return products.map((product) {
+      // Create a clean copy without ID
+      final cleanProduct = Map<String, dynamic>.from(product);
+      cleanProduct.remove('id');
+
+      // Fix crust data
+      if (cleanProduct['crust'] != null) {
+        if (cleanProduct['crust'] is Map) {
+          final crust = Map<String, dynamic>.from(cleanProduct['crust']);
+          // Remove null values from crust
+          crust.removeWhere((key, value) => value == null);
+          cleanProduct['crust'] = crust;
+        } else {
+          cleanProduct['crust'] = {};
+        }
+      } else {
+        cleanProduct['crust'] = {};
+      }
+
+      // Ensure Sauce is always a List
+      if (cleanProduct['Sauce'] == null) {
+        cleanProduct['Sauce'] = [];
+      }
+
+      // Ensure price structure is correct
+      if (cleanProduct['price'] != null && cleanProduct['price'] is Map) {
+        final price = Map<String, dynamic>.from(cleanProduct['price']);
+        // Convert all price values to double
+        price.forEach((key, value) {
+          if (value != null) {
+            price[key] = value is int ? value.toDouble() : value;
+          }
+        });
+        cleanProduct['price'] = price;
+      }
+
+      return cleanProduct;
+    }).toList();
+  }
+}
