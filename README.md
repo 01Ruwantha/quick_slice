@@ -16,9 +16,9 @@
 
 <div align="center">
 
-| Home Screen | Add To Card Page | Cart |
+| Home Screen | Add To Cart Page | Cart |
 |-------------|-----------------|------|
-| <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/homePage.jpg?raw=true" alt="Home page" width="150" height="300"> | <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/addToCardPage.jpg?raw=true" alt="Home page" width="150" height="300"> |<img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/homePage.jpg?raw=true" alt="Home page" width="150" height="300"> |
+| <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/homePage.jpg?raw=true" alt="Home page" width="150" height="300"> | <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/addToCardPage.jpg?raw=true" alt="Home page" width="150" height="300"> |<img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/cartPage.jpg?raw=true" alt="Cart page" width="150" height="300"> |
 
 | Search | Favorites | Profile |
 |--------|-----------|---------|
