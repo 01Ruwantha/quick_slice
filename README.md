@@ -22,7 +22,7 @@
 
 | Search | Favorites | Profile |
 |--------|-----------|---------|
-| <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/searchPage.jpg?raw=true" alt="Search page" width="150" height="300"> | <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/favouritePage.jpg?raw=true" alt="Favorites page" width="150" height="300">| <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/homePage.jpg?raw=true" alt="Home page" width="150" height="300"> |
+| <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/searchPage.jpg?raw=true" alt="Search page" width="150" height="300"> | <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/favouritePage.jpg?raw=true" alt="Favorites page" width="150" height="300">| <img src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/profilePage.jpg?raw=true" alt="Profile page" width="150" height="300"> |
 
 </div>
 
