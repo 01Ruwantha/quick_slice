@@ -12,6 +12,20 @@
 
 </div>
 
+## 📱 Screenshots
+
+<div align="center">
+
+| Home Screen | Product Details | Cart |
+|-------------|-----------------|------|
+| ![Home](https://via.placeholder.com/200x400/880E4F/FFFFFF?text=Home) | ![Details](https://via.placeholder.com/200x400/E65100/FFFFFF?text=Details) | ![Cart](https://via.placeholder.com/200x400/F9A825/000000?text=Cart) |
+
+| Search | Favorites | Profile |
+|--------|-----------|---------|
+| ![Search](https://via.placeholder.com/200x400/2196F3/FFFFFF?text=Search) | ![Favorites](https://via.placeholder.com/200x400/E91E63/FFFFFF?text=Favorites) | ![Profile](https://via.placeholder.com/200x400/4CAF50/FFFFFF?text=Profile) |
+
+</div>
+
 ## ✨ Features
 
 ### 🎯 Core Features
@@ -42,38 +56,6 @@
 - Dart (3.0 or higher)
 - Firebase Account
 - Stripe Account
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/quick_slice.git
-   cd quick_slice
-   ```
-
-2. **Install dependencies**
-   ```bash
-   flutter pub get
-   ```
-
-3. **Configure Environment Variables**
-   - Create a `.env` file in the root directory
-   - Add your configuration:
-     ```
-     uri=your_backend_server_url
-     STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
-     STRIPE_SECRET_KEY=your_stripe_secret_key
-     ```
-
-4. **Firebase Setup**
-   ```bash
-   flutterfire configure
-   ```
-
-5. **Run the app**
-   ```bash
-   flutter run
-   ```
 
 ## 🏗️ Project Structure
 
@@ -167,59 +149,7 @@ await StripeService.instance.makePayment(
 | **HTTP** | API communication |
 | **Shared Preferences** | Local storage |
 
-## 📱 Screenshots
 
-<div align="center">
-
-| Home Screen | Product Details | Cart |
-|-------------|-----------------|------|
-| ![Home](https://via.placeholder.com/200x400/880E4F/FFFFFF?text=Home) | ![Details](https://via.placeholder.com/200x400/E65100/FFFFFF?text=Details) | ![Cart](https://via.placeholder.com/200x400/F9A825/000000?text=Cart) |
-
-| Search | Favorites | Profile |
-|--------|-----------|---------|
-| ![Search](https://via.placeholder.com/200x400/2196F3/FFFFFF?text=Search) | ![Favorites](https://via.placeholder.com/200x400/E91E63/FFFFFF?text=Favorites) | ![Profile](https://via.placeholder.com/200x400/4CAF50/FFFFFF?text=Profile) |
-
-</div>
-
-## 🚀 Getting Started for Developers
-
-### Backend Setup
-1. Navigate to the server directory:
-   ```bash
-   cd server
-   npm install
-   ```
-
-2. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-### Environment Configuration
-Create `lib/firebase_options.dart` using:
-```bash
-flutterfire configure
-```
-
-### Building for Production
-```bash
-flutter build apk --release
-flutter build ios --release
-```
-
-## 🤝 Contributing
-
-We love contributions! Here's how you can help:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🏆 Acknowledgments
 
@@ -232,9 +162,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Having trouble? Contact us or create an issue:
 
-- 📧 Email: support@quickslice.com
-- 🐛 [Bug Reports](https://github.com/yourusername/quick_slice/issues)
-- 💡 [Feature Requests](https://github.com/yourusername/quick_slice/issues)
+- 📧 Email: 2000ruwantha@gmail.com
+- 🐛 [Bug Reports](https://github.com/01Ruwantha/quick_slice/issues)
+- 💡 [Feature Requests](https://github.com/01Ruwantha/quick_slice/issues)
 
 ---
 
@@ -248,4 +178,3 @@ Having trouble? Contact us or create an issue:
 
 ---
 
-*Note: Replace placeholder images and links with actual screenshots and your repository URL before publishing.*
