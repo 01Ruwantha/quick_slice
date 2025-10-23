@@ -64,6 +64,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1036021868367',
     projectId: 'quick-slice-e7905',
     storageBucket: 'quick-slice-e7905.firebasestorage.app',
+    androidClientId: '1036021868367-jhp5ks5q3km4cgkr27tqplgjo2h6g6eq.apps.googleusercontent.com',
+    iosClientId: '1036021868367-pf8rshsp7nkjfb33aq8h87ra9p8h5fse.apps.googleusercontent.com',
     iosBundleId: 'com.example.quickSlice',
   );
 
@@ -73,6 +75,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1036021868367',
     projectId: 'quick-slice-e7905',
     storageBucket: 'quick-slice-e7905.firebasestorage.app',
+    androidClientId: '1036021868367-jhp5ks5q3km4cgkr27tqplgjo2h6g6eq.apps.googleusercontent.com',
+    iosClientId: '1036021868367-pf8rshsp7nkjfb33aq8h87ra9p8h5fse.apps.googleusercontent.com',
     iosBundleId: 'com.example.quickSlice',
   );
 

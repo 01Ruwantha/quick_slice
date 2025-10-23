@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quick_slice/models/user.dart';
+import 'package:quick_slice/models/app_user.dart';
 
 class UserProvider extends ChangeNotifier {
-  User _user = User(
+  AppUser _user = AppUser(
     id: '',
     name: '',
     phone: '',
@@ -12,14 +12,14 @@ class UserProvider extends ChangeNotifier {
     password: '',
   );
 
-  User get user => _user;
+  AppUser get user => _user;
 
   void setUser(String user) {
-    _user = User.fromJson(user);
+    _user = AppUser.fromJson(user);
     notifyListeners();
   }
 
-  void setUserFromModel(User user) {
+  void setUserFromModel(AppUser user) {
     _user = user;
     notifyListeners();
   }

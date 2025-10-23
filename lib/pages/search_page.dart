@@ -70,34 +70,35 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: AppBarTitle(text: 'Search Page', textSize: 25)),
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              SearchBar(
-                controller: _searchController,
-                hintText: 'Search',
-                backgroundColor: WidgetStateProperty.all(Colors.white),
-                elevation: WidgetStateProperty.all(0),
-                onChanged: _runSearch,
-              ),
-              FutureBuilder(
-                future: _searchFuture,
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasData) {
-                      return Expanded(
-                        child: GridViewBuilder(listname: _filteredItems),
-                      );
-                    }
+      appBar: AppBar(
+        title: AppBarTitle(text: 'Search Page', textSize: 35),
+        centerTitle: true,
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            SearchBar(
+              controller: _searchController,
+              hintText: 'Search',
+              backgroundColor: WidgetStateProperty.all(Colors.white),
+              elevation: WidgetStateProperty.all(0),
+              onChanged: _runSearch,
+            ),
+            FutureBuilder(
+              future: _searchFuture,
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: GridViewBuilder(listname: _filteredItems),
+                    );
                   }
-                  return const Center(child: LinearProgressIndicator());
-                },
-              ),
-            ],
-          ),
+                }
+                return const Center(child: LinearProgressIndicator());
+              },
+            ),
+          ],
         ),
       ),
     );

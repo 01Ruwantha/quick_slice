@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:quick_slice/pages/auth_pages/sign_in.dart';
+import 'package:go_router/go_router.dart';
+import 'package:quick_slice/router/router_names.dart';
 import 'package:quick_slice/sevices/auth_services.dart';
 import 'package:quick_slice/utils/utils.dart';
 import 'package:quick_slice/widgets/app_bar_title.dart';
@@ -59,6 +60,7 @@ class _SignUpState extends State<SignUp> {
                 TextFormFieldWidget(
                   hintText: 'Name',
                   controller: _nameController,
+                  obscureText: false,
                 ),
                 SizedBox(height: height),
                 Text(
@@ -68,24 +70,28 @@ class _SignUpState extends State<SignUp> {
                 TextFormFieldWidget(
                   hintText: 'Code',
                   controller: _phoneNumberController,
+                  obscureText: false,
                 ),
                 SizedBox(height: height),
                 Text('Email Id', style: TextStyle(fontWeight: FontWeight.bold)),
                 TextFormFieldWidget(
                   hintText: 'Email',
                   controller: _emailIdController,
+                  obscureText: false,
                 ),
                 SizedBox(height: height),
                 Text('Role', style: TextStyle(fontWeight: FontWeight.bold)),
                 TextFormFieldWidget(
                   hintText: 'Role',
                   controller: _roleController,
+                  obscureText: false,
                 ),
                 SizedBox(height: height),
                 Text('Password', style: TextStyle(fontWeight: FontWeight.bold)),
                 TextFormFieldWidget(
                   hintText: 'Password',
                   controller: _passwordController,
+                  obscureText: false,
                 ),
                 SizedBox(height: height),
                 Text(
@@ -95,6 +101,7 @@ class _SignUpState extends State<SignUp> {
                 TextFormFieldWidget(
                   hintText: 'Conform Password',
                   controller: _conformPasswordController,
+                  obscureText: false,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
@@ -179,7 +186,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     Text(
-                      'or Sign up with',
+                      'or Sign in with',
                       style: TextStyle(color: Colors.grey),
                     ),
                     Expanded(
@@ -192,48 +199,7 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
                 SizedBox(height: height),
-                Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          // Handle tap
-                        },
-                        child: Container(
-                          height: 60, // Button height
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.grey.shade300),
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/google.png'),
-                              fit: BoxFit.fitHeight, // Cover the whole button
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 20),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          // Handle tap
-                        },
-                        child: Container(
-                          height: 60, // Button height
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.grey.shade300),
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/apple.png'),
-                              fit: BoxFit.fitHeight, // Cover the whole button
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: height),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -243,9 +209,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pop(
-                          MaterialPageRoute(builder: (context) => SignIn()),
-                        );
+                        context.goNamed(RouterNames.signIn);
                       },
                       child: Text(
                         ' Sign in',
@@ -254,6 +218,8 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ],
                 ),
+                SizedBox(height: height),
+                SizedBox(height: height),
               ],
             ),
           ),

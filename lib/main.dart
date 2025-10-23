@@ -2,19 +2,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_slice/router/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'pages/auth_pages/sign_in.dart';
-import 'pages/home_page.dart';
 import 'providers/cart_provider.dart';
 import 'providers/user_provider.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  // Initialize Flutter bindings
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  // Preserve the splash screen until initialization is done
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -24,7 +28,7 @@ Future<void> main() async {
 
   // Debug: Print all loaded environment variables
   if (kDebugMode) {
-    print('Loaded environment variables:');
+    print('Loaded environment variables:  ');
     print('uri: ${dotenv.env["uri"]}');
     print('STRIPE_PUBLISHABLE_KEY: ${dotenv.env["STRIPE_PUBLISHABLE_KEY"]}');
     print(
@@ -32,7 +36,6 @@ Future<void> main() async {
     );
   }
 
-  // Validate Stripe key
   final stripeKey = dotenv.env["STRIPE_PUBLISHABLE_KEY"];
   if (stripeKey == null || stripeKey.isEmpty) {
     if (kDebugMode) {
@@ -59,6 +62,9 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  // Remove splash screen after initialization
+  FlutterNativeSplash.remove();
 
   // Run app with providers
   runApp(
@@ -108,13 +114,14 @@ class _MyAppState extends State<MyApp> {
       );
     }
 
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: token.isEmpty ? const SignIn() : const HomePage(),
+      // home: token.isEmpty ? const SignIn() : const HomePage(),
+      routerConfig: RouterClass().router,
     );
   }
 }

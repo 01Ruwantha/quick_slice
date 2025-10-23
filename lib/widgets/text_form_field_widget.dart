@@ -3,18 +3,22 @@ import 'package:flutter/material.dart';
 class TextFormFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
+  final bool obscureText;
   const TextFormFieldWidget({
     super.key,
     required this.controller,
     required this.hintText,
+    required this.obscureText,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hintText,
+
         hintStyle: TextStyle(color: Colors.grey),
         border: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey),
@@ -42,7 +46,8 @@ class TextFormFieldWidget extends StatelessWidget {
         }
         if (hintText == 'Email') {
           final emailRegex = RegExp(
-              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
+          );
           if (!emailRegex.hasMatch(value.toString())) {
             return 'Enter a valid email address';
           }

@@ -56,6 +56,63 @@ class _ProfilePageState extends State<ProfilePage> {
     authServices.signOut(context);
   }
 
+  void _showLogoutConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.person, size: 64, color: Colors.orange),
+                const SizedBox(height: 16),
+                const Text(
+                  "Ready to leave?",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  "Are you sure you want to log out?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text("Stay"),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          signOutUser(context);
+                        },
+                        child: const Text("Log Out"),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Future<Map<String, String?>> getUserDetails() async {
     final prefs = await SharedPreferences.getInstance();
     return {
@@ -70,7 +127,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const AppBarTitle(text: 'Profile', textSize: 25),
+        title: const AppBarTitle(text: 'Profile', textSize: 35),
+        centerTitle: true,
         elevation: 0,
       ),
       body: FutureBuilder<Map<String, String?>>(
@@ -193,8 +251,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
                   // Sign Out Button
                   CustomButton(
-                    onTap: () => signOutUser(context),
-                    text: 'Sign Out',
+                    onTap: () => _showLogoutConfirmationDialog(context),
+                    text: 'Log Out',
                   ),
                 ],
               ),

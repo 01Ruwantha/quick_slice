@@ -2,14 +2,16 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:quick_slice/models/app_user.dart';
+import 'package:quick_slice/router/router_names.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hive/hive.dart';
 
-import '../models/user.dart';
-import '../pages/auth_pages/sign_in.dart';
-import '../pages/home_page.dart';
+// import '../pages/auth_pages/sign_in.dart';
+// import '../pages/home_page.dart';
 import '../providers/user_provider.dart';
 
 class AuthServices {
@@ -23,7 +25,7 @@ class AuthServices {
     required String password,
   }) async {
     try {
-      User user = User(
+      AppUser user = AppUser(
         id: '',
         name: name,
         phone: phone,
@@ -38,7 +40,7 @@ class AuthServices {
         body: user.toJson(),
         headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
-
+      if (!context.mounted) return;
       _handleAuthResponse(
         response: res,
         context: context,
@@ -63,14 +65,14 @@ class AuthServices {
   }) async {
     try {
       var userProvider = Provider.of<UserProvider>(context, listen: false);
-      final navigator = Navigator.of(context);
+      //final navigator = Navigator.of(context);
 
       http.Response res = await http.post(
         Uri.parse('${dotenv.env['uri']}/api/signin'),
         body: jsonEncode({'email': email, 'password': password}),
         headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
-
+      if (!context.mounted) return;
       _handleAuthResponse(
         response: res,
         context: context,
@@ -85,13 +87,19 @@ class AuthServices {
           await prefs.setString('email', data['email'] ?? '');
           await prefs.setString('role', data['role'] ?? '');
 
-          navigator.pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const HomePage()),
-            (route) => false,
-          );
+          // navigator.pushAndRemoveUntil(
+          //   MaterialPageRoute(builder: (context) => const HomePage()),
+          //   (route) => false,
+          // );
+
+          // Ensure context is still mounted and valid
+          if (context.mounted) {
+            context.goNamed(RouterNames.bottomNavigation);
+          }
         },
       );
     } catch (e) {
+      if (!context.mounted) return;
       _showSnackBar(context, e.toString());
       if (kDebugMode) debugPrint("SignIn Error: $e");
     }
@@ -139,8 +147,9 @@ class AuthServices {
                 userProvider.setUser(userRes.body);
                 if (kDebugMode) print("User data loaded successfully");
               } else {
-                if (kDebugMode)
+                if (kDebugMode) {
                   print("Failed to load user data: ${userRes.statusCode}");
+                }
                 await _clearUserData(prefs);
               }
             } else {
@@ -156,8 +165,9 @@ class AuthServices {
           await _clearUserData(prefs);
         }
       } else {
-        if (kDebugMode)
+        if (kDebugMode) {
           print("Token validation failed: ${tokenRes.statusCode}");
+        }
         await _clearUserData(prefs);
       }
     } catch (e) {
@@ -179,7 +189,7 @@ class AuthServices {
   // Sign Out
   Future<void> signOut(BuildContext context) async {
     try {
-      final navigator = Navigator.of(context);
+      //final navigator = Navigator.of(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       // Clear SharedPreferences
@@ -189,12 +199,18 @@ class AuthServices {
       await Hive.box('cartBox').clear();
       await Hive.box('profile').clear();
 
-      navigator.pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const SignIn()),
-        (route) => false,
-      );
+      // navigator.pushAndRemoveUntil(
+      //   MaterialPageRoute(builder: (context) => const SignIn()),
+      //   (route) => false,
+      // );
+
+      if (context.mounted) {
+        context.goNamed(RouterNames.signIn);
+      }
     } catch (e) {
-      _showSnackBar(context, e.toString());
+      if (context.mounted) {
+        _showSnackBar(context, e.toString());
+      }
       if (kDebugMode) debugPrint("SignOut Error: $e");
     }
   }
