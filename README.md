@@ -180,6 +180,14 @@ Having trouble? Contact us or create an issue:
 ---
 
 <div align="center">
+<p align="center">
+  <img 
+  src="https://github.com/01Ruwantha/quick_slice/blob/main/Screenshots/QuickSliceImg.png?raw=true" 
+  alt="QuickSlice Post Image" 
+  width="1080" 
+  height="720"
+/>
+</p>
 
 **Made with ❤️ and ☕ by Ruwantha Madhushan**
 
